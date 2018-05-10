@@ -1,6 +1,6 @@
 package win.whitelife.ui.mainpage
 
-import win.whitelife.voicesecret.basem.main.BaseView
+import win.whitelife.voicesecret.base.main.BaseView
 
 
 /**

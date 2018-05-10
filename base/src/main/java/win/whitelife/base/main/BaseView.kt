@@ -1,4 +1,4 @@
-package win.whitelife.voicesecret.basem.main
+package win.whitelife.voicesecret.base.main
 
 import android.content.Context
 

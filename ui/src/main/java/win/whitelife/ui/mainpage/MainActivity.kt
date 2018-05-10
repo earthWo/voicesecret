@@ -1,7 +1,7 @@
 package win.whitelife.ui.mainpage
 
 import win.whitelife.ui.R
-import win.whitelife.voicesecret.basem.main.BaseActivity
+import win.whitelife.voicesecret.base.main.BaseActivity
 
 class MainActivity : BaseActivity<MainPresent, MainActivity>(), MainView {
 
