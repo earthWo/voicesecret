@@ -1,5 +1,6 @@
 package win.whitelife.ui.mainpage
 
+import win.whitelife.base.utils.FileUtil
 import win.whitelife.ui.R
 import win.whitelife.voicesecret.base.main.BaseActivity
 
@@ -19,6 +20,7 @@ class MainActivity : BaseActivity<MainPresent, MainActivity>(), MainView {
 
 
     override fun fetchData() {
+        FileUtil.init(this)
     }
 
 

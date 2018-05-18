@@ -8,7 +8,7 @@ import io.realm.RealmConfiguration
  * @author wuzefeng
  * 2018/5/9
  */
-class BaseApplication : Application(){
+open class BaseApplication : Application(){
 
 
     override fun onCreate() {
