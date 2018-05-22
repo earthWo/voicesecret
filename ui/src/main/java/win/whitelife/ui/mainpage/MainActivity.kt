@@ -1,10 +1,24 @@
 package win.whitelife.ui.mainpage
 
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
 import win.whitelife.ui.R
 import win.whitelife.voicesecret.base.main.BaseActivity
+import kotlinx.android.synthetic.main.activity_main.*
+import win.whitelife.base.bean.Voice
 
 class MainActivity : BaseActivity<MainPresent, MainContract.IMainView>(),MainContract.IMainView{
+
+    private var voices: List<Voice>?=null
+
+    override fun bindData(voices: List<Voice>) {
+        this.voices=voices
+        mAdapter.notifyDataSetChanged()
+    }
 
 
     override fun createPresent(): MainPresent {
@@ -12,6 +26,8 @@ class MainActivity : BaseActivity<MainPresent, MainContract.IMainView>(),MainCon
     }
 
     override fun initView() {
+        rv_voice.layoutManager=LinearLayoutManager(this)
+        rv_voice.adapter=mAdapter
     }
 
     override fun getLayout(): Int {
@@ -20,11 +36,42 @@ class MainActivity : BaseActivity<MainPresent, MainContract.IMainView>(),MainCon
 
 
     override fun fetchData() {
+        present!!.fetchData()
     }
 
 
     fun jumpToRecord(view: View){
         present!!.jumpToRecord()
+    }
+
+
+    class VoiceHolder(view: View): RecyclerView.ViewHolder(view) {
+
+        var titleView: TextView = view.findViewById(R.id.tv_voice_title)
+        var timeView: TextView = view.findViewById(R.id.tv_voice_time)
+
+    }
+
+    private val mAdapter: RecyclerView.Adapter<VoiceHolder> = object : RecyclerView.Adapter<VoiceHolder>() {
+
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VoiceHolder {
+            return VoiceHolder(LayoutInflater.from(this@MainActivity).inflate(R.layout.item_voice,parent,false))
+        }
+
+        override fun getItemCount(): Int {
+            return if(voices==null){
+                0
+            }else{
+                voices!!.size
+            }
+        }
+
+        override fun onBindViewHolder(holder: VoiceHolder, position: Int) {
+            holder.titleView.text=voices!![position].title
+            holder.timeView.text=""+voices!![position].createTime
+        }
+
     }
 
 }
