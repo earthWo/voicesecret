@@ -68,6 +68,11 @@ abstract class BaseActivity<P: BasePresent<V>,V: BaseView>: AppCompatActivity(),
         fetchData()
     }
 
+    override fun onStop() {
+        super.onStop()
+        supportLoaderManager.destroyLoader(LOAD_ID)
+    }
+
     /**
      * 加载数据
      */

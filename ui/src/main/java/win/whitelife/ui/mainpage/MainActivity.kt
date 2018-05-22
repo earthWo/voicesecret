@@ -1,7 +1,11 @@
 package win.whitelife.ui.mainpage
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.LayoutDirection
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +14,7 @@ import win.whitelife.ui.R
 import win.whitelife.voicesecret.base.main.BaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import win.whitelife.base.bean.Voice
+import win.whitelife.base.utils.TimeUtil
 
 class MainActivity : BaseActivity<MainPresent, MainContract.IMainView>(),MainContract.IMainView{
 
@@ -27,6 +32,9 @@ class MainActivity : BaseActivity<MainPresent, MainContract.IMainView>(),MainCon
 
     override fun initView() {
         rv_voice.layoutManager=LinearLayoutManager(this)
+        val dividerItemDecoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
+        dividerItemDecoration.setDrawable(ColorDrawable(Color.WHITE))
+        rv_voice.addItemDecoration(dividerItemDecoration)
         rv_voice.adapter=mAdapter
     }
 
@@ -69,7 +77,7 @@ class MainActivity : BaseActivity<MainPresent, MainContract.IMainView>(),MainCon
 
         override fun onBindViewHolder(holder: VoiceHolder, position: Int) {
             holder.titleView.text=voices!![position].title
-            holder.timeView.text=""+voices!![position].createTime
+            holder.timeView.text=TimeUtil.defaultDecodeTime(voices!![position].createTime)
         }
 
     }
