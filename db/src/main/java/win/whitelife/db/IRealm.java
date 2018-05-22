@@ -5,7 +5,9 @@ import io.realm.RealmObject;
 import io.realm.RealmResults;
 
 /**
- * Created by wuzefeng on 2017/9/27.
+ *
+ * @author wuzefeng
+ * 2017/9/27
  */
 
 public interface IRealm {
@@ -16,6 +18,7 @@ public interface IRealm {
      * @param <T>
      * @return
      */
+    @RealmTypes(RealmType.ADD)
     <T extends RealmObject> T copyToRealm(T... t);
 
     /**
@@ -24,6 +27,7 @@ public interface IRealm {
      * @param <T>
      * @return
      */
+    @RealmTypes(RealmType.ADD)
     <T extends RealmObject> List<T> copyToRealm(List<T> list);
 
 
@@ -34,6 +38,7 @@ public interface IRealm {
      * @param <T>
      * @return
      */
+    @RealmTypes(RealmType.UPDATE)
     <T extends RealmObject> List<T> copyToRealmOrUpdate(List<T> list);
 
 
@@ -44,6 +49,7 @@ public interface IRealm {
      * @param <T>
      * @return
      */
+    @RealmTypes(RealmType.UPDATE)
     <T extends RealmObject> T copyToRealmOrUpdate(T... t);
 
 
@@ -52,6 +58,7 @@ public interface IRealm {
      * @param t
      * @param <T>
      */
+    @RealmTypes(RealmType.DELETE)
     <T extends RealmObject>T deleteFromRealm(T... t);
 
 
@@ -62,6 +69,7 @@ public interface IRealm {
      * @param <T>
      * @return
      */
+    @RealmTypes(RealmType.DELETE)
     <T extends RealmObject>T deleteFromRealm(RealmResults<T> t, int... i);
 
 
@@ -71,6 +79,7 @@ public interface IRealm {
      * @param <T>
      * @return
      */
+    @RealmTypes(RealmType.DELETE)
     <T extends RealmObject>List<T> deleteFromRealm(List<T> list);
 
 
@@ -80,6 +89,7 @@ public interface IRealm {
      * @param <T>
      * @return
      */
+    @RealmTypes(RealmType.SEARCH)
     <T extends RealmObject>RealmResults<T> findAll(Class<T> cla);
 
 
@@ -91,7 +101,8 @@ public interface IRealm {
      * @param <T>
      * @return
      */
-    public <T extends RealmObject>RealmResults<T> findEquals(Class<T> cla, String[] args, Object[] values);
+    @RealmTypes(RealmType.SEARCH)
+     <T extends RealmObject>RealmResults<T> findEquals(Class<T> cla, String[] args, Object[] values);
 
 
     /**
@@ -104,6 +115,7 @@ public interface IRealm {
      * @param <T>
      * @return
      */
+    @RealmTypes(RealmType.MODIFY)
     <T extends RealmObject>T modify(Class<T> cla, T t, String[] args, Class[] classes, Object[] values);
 
 }

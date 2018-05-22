@@ -8,13 +8,15 @@ import io.realm.RealmConfiguration
  * @author wuzefeng
  * 2018/5/9
  */
-open class BaseApplication : Application(){
+open abstract class BaseApplication : Application(){
 
 
     override fun onCreate() {
         super.onCreate()
         initDb()
+        init()
     }
+   abstract fun init()
 
 
 

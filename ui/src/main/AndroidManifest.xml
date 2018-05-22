@@ -2,12 +2,9 @@
           package="win.whitelife.ui">
 
     <application>
-        <activity android:name="win.whitelife.ui.mainpage.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name="win.whitelife.ui.mainpage.MainActivity"/>
+        <activity android:name="win.whitelife.ui.record.RecordActivity"/>
+        <service android:name="win.whitelife.record.VoiceService"></service>
     </application>
 
 </manifest>

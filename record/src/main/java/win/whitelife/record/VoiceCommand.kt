@@ -6,9 +6,7 @@ package win.whitelife.record
  */
 class VoiceCommand {
 
-
     companion object {
-
 
         const val COMMAND="COMMAND"
 

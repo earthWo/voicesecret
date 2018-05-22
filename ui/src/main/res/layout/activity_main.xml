@@ -60,4 +60,21 @@
         app:layout_constraintTop_toTopOf="parent">
     </android.support.v7.widget.RecyclerView>
 
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_margin="16dp"
+        app:backgroundTint="#d8bd5f"
+        app:elevation="6dp"
+        app:borderWidth="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:pressedTranslationZ="12dp"
+        android:src="@drawable/ui_plus"
+        android:clickable="true"
+        android:onClick="jumpToRecord"
+        app:rippleColor="#ae912e"/>
+
 </android.support.constraint.ConstraintLayout>

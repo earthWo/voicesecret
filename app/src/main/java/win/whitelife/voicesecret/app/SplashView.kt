@@ -1,13 +1,11 @@
-package win.whitelife.ui.mainpage
+package win.whitelife.voicesecret.app
 
 import win.whitelife.voicesecret.base.main.BaseView
 
-
 /**
  * @author wuzefeng
- * 2018/5/7
+ * 2018/5/18
  */
-interface MainView: BaseView {
-
+interface SplashView : BaseView{
 
 }

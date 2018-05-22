@@ -10,16 +10,10 @@ import android.support.v7.app.AppCompatActivity
  */
 abstract class BaseActivity<P: BasePresent<V>,V: BaseView>: AppCompatActivity(), LoaderManager.LoaderCallbacks<P>, BaseView {
 
-    protected var mContent: Context?=null
 
     protected var present: P?=null
 
     private val LOAD_ID=1001
-
-    override fun attachBaseContext(newBase: Context?) {
-        super.attachBaseContext(newBase)
-        this.mContent=newBase
-    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,8 +50,8 @@ abstract class BaseActivity<P: BasePresent<V>,V: BaseView>: AppCompatActivity(),
     /**
      * 创建present
      */
-    fun createPresentLoader(id: Int, args: Bundle?): Loader<P> {
-        return PresentLoader(mContent!!, object : LoaderFactory<P,V> {
+    private fun createPresentLoader(id: Int, args: Bundle?): Loader<P> {
+        return PresentLoader(this, object : LoaderFactory<P,V> {
             override fun create(): P {
                return createPresent()
             }
@@ -87,7 +81,7 @@ abstract class BaseActivity<P: BasePresent<V>,V: BaseView>: AppCompatActivity(),
     }
 
     override fun obtainContent(): Context {
-        return mContent!!
+        return this
     }
 
 

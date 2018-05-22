@@ -1,10 +1,10 @@
 package win.whitelife.ui.mainpage
 
-import win.whitelife.base.utils.FileUtil
+import android.view.View
 import win.whitelife.ui.R
 import win.whitelife.voicesecret.base.main.BaseActivity
 
-class MainActivity : BaseActivity<MainPresent, MainActivity>(), MainView {
+class MainActivity : BaseActivity<MainPresent, MainContract.IMainView>(),MainContract.IMainView{
 
 
     override fun createPresent(): MainPresent {
@@ -20,8 +20,11 @@ class MainActivity : BaseActivity<MainPresent, MainActivity>(), MainView {
 
 
     override fun fetchData() {
-        FileUtil.init(this)
     }
 
+
+    fun jumpToRecord(view: View){
+        present!!.jumpToRecord()
+    }
 
 }

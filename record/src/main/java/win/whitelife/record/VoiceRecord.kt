@@ -50,16 +50,11 @@ class VoiceRecord: IRecord{
         //数据来源麦克风
         mMediaRecorder!!.setAudioSource(MediaRecorder.AudioSource.MIC)
         //保存数据格式
-        mMediaRecorder!!.setOutputFormat(MediaRecorder.OutputFormat.AAC_ADTS)
-        //设置声音数据编码格式,音频通用格式是AAC
-        mMediaRecorder!!.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
-        //设置采样频率
-        mMediaRecorder!!.setAudioSamplingRate(AUDIO_SAMPLING_RATE)
-        //设置编码频率
-        mMediaRecorder!!.setAudioEncodingBitRate(AUDIO_ENCODING_BIT_RATE)
-        //设置采样频率
+        mMediaRecorder!!.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
         this.filePath=filePath
         mMediaRecorder!!.setOutputFile(filePath)
+        //设置声音数据编码格式,音频通用格式是AAC
+        mMediaRecorder!!.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
 
         mMediaRecorder!!.prepare()
         mMediaRecorder!!.start()
@@ -84,7 +79,10 @@ class VoiceRecord: IRecord{
     }
 
     override fun release() {
-        mMediaRecorder!!.release()
+        if(mMediaRecorder!=null){
+            mMediaRecorder!!.release()
+            mMediaRecorder=null
+        }
     }
 
 }

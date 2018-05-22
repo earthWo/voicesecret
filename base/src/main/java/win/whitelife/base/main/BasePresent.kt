@@ -6,7 +6,7 @@ package win.whitelife.voicesecret.base.main
  */
 abstract class BasePresent<V: BaseView> {
 
-    private var mView: V?=null
+    var mView: V?=null
 
     fun attachView(v: V){
         mView=v

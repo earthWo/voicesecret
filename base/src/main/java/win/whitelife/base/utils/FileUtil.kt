@@ -23,20 +23,19 @@ class FileUtil{
 
 
         fun init(context: Context){
-
             FILE_ROOT_PATH =  context.filesDir.absolutePath
         }
 
 
 
         private fun getVoiceRootPath(): String?{
-            return FILE_ROOT_PATH+File.separator+"voice"+VOICE_TYPE
+            return FILE_ROOT_PATH
         }
 
 
         private fun createVoiceFileName(): String{
             val time=System.currentTimeMillis()
-            return getVoiceRootPath()+File.separator+time
+            return getVoiceRootPath()+File.separator+"voice"+time+VOICE_TYPE
         }
 
 

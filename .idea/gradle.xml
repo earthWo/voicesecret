@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/db" />
             <option value="$PROJECT_DIR$/record" />
             <option value="$PROJECT_DIR$/ui" />
+            <option value="$PROJECT_DIR$/view" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
