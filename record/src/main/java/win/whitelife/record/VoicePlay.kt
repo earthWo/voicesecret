@@ -1,10 +1,18 @@
 package win.whitelife.record
 
+import android.media.MediaPlayer
+
 /**
  * @author wuzefeng
  * 2018/5/11
  */
 class VoicePlay: IPlay {
+
+
+    private  var mediaPlayer:MediaPlayer?=null
+
+
+    private var mCurrentFilePath: String?=null
 
     private constructor()
 
@@ -24,26 +32,49 @@ class VoicePlay: IPlay {
             }
             return sInstance!!
         }
+    }
 
+    override fun play(fileName: String) {
+        if(mediaPlayer==null||!mediaPlayer!!.isPlaying){
+            initPlayer()
+            mCurrentFilePath=fileName
+            mediaPlayer!!.setDataSource(fileName)
+            mediaPlayer!!.prepare()
+            mediaPlayer!!.setOnPreparedListener {
+                mediaPlayer!!.start()
+            }
+        }else{
+            mediaPlayer!!.start()
+        }
     }
 
 
-
-
-
-    override fun play(fileName: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    private fun initPlayer(){
+        if (mediaPlayer==null){
+            mediaPlayer= MediaPlayer()
+        }
+        mediaPlayer!!.reset()
     }
 
     override fun pause() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        mediaPlayer!!.pause()
     }
 
-    override fun stop() {
+    override fun stop():String {
+        mediaPlayer!!.stop()
+        release()
+        return mCurrentFilePath!!
     }
 
-    override fun realse() {
+    private fun release() {
+        mediaPlayer!!.release()
+        mediaPlayer=null
     }
+
+    override fun setCompletionListener(listener: MediaPlayer.OnCompletionListener) {
+        mediaPlayer!!.setOnCompletionListener(listener)
+    }
+
 
 
 }

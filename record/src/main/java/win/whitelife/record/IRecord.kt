@@ -12,6 +12,5 @@ interface IRecord {
 
     fun stopRecord():String
 
-    fun release()
 
 }

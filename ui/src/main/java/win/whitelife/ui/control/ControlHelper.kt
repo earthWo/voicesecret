@@ -83,7 +83,7 @@ class ControlHelper : IControl {
     override fun play(context: Context, filePath: String) {
         val intent= Intent(context,VoiceService::class.java)
         intent.putExtra(VoiceCommand.COMMAND,VoiceCommand.COMMAND_START_PLAY)
-        intent.putExtra(VoiceCommand.COMMAND,VoiceCommand.COMMAND_FILE)
+        intent.putExtra(VoiceCommand.COMMAND_FILE,filePath)
         context.startService(intent)
     }
 
@@ -108,5 +108,21 @@ class ControlHelper : IControl {
             return sInstance!!
         }
     }
+
+    override fun release(mode: ControlMode,controlView: IControlView){
+        unRegisterControlView(controlView)
+        when(mode){
+            ControlMode.PLAY,
+            ControlMode.PLAY_PAUSE->{
+               stopPlay(controlView.getContext())
+            }
+            ControlMode.RECORD,
+            ControlMode.RECORD_PAUSE->{
+                stopRecord(controlView.getContext())
+            }
+        }
+    }
+
+
 
 }

@@ -32,6 +32,8 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:multidex:1.0.0'
+    implementation 'win.whitelife.ZFPermission:permission:0.0.1'
+    implementation 'com.android.support:cardview-v7:27.1.1'
     implementation project(':base')
     implementation project(':ui')
     implementation project(':db')

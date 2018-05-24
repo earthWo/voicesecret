@@ -17,7 +17,7 @@ class RecordPresent: RecordContract.IRecordPresent() {
         voice.filePath=filePath
         voice.createTime=System.currentTimeMillis()
         voice.name=filePath.substring(filePath.lastIndexOf("/")+1)
-        voice.title="默认录音"+voice.name
+        voice.title="默认录音"+voice.name.subSequence(0,voice.name.indexOf("."))
         DbHelper.getInstance().realm.copyToRealm(voice)
 
     }

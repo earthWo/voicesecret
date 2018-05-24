@@ -75,10 +75,11 @@ class VoiceRecord: IRecord{
 
     override fun stopRecord(): String {
         mMediaRecorder!!.stop()
+        release()
         return filePath!!
     }
 
-    override fun release() {
+    private fun release() {
         if(mMediaRecorder!=null){
             mMediaRecorder!!.release()
             mMediaRecorder=null

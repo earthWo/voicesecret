@@ -19,7 +19,7 @@ class FileUtil{
         private var FILE_ROOT_PATH: String?=null
 
 
-        private const val VOICE_TYPE=".aar"
+        private const val VOICE_TYPE=".aac"
 
 
         fun init(context: Context){

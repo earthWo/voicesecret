@@ -1,6 +1,6 @@
 package win.whitelife.voicesecret.app
 
-import android.content.Context
+import win.whitelife.permission.PermissionManager
 import win.whitelife.voicesecret.R
 import win.whitelife.voicesecret.base.main.BaseActivity
 
@@ -12,6 +12,10 @@ class SplashActivity: BaseActivity<SplashPresent,SplashView>(),SplashView {
 
 
     override fun initView() {
+        PermissionManager.with(this)
+                .addPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .addPermission(android.Manifest.permission.RECORD_AUDIO)
+                .start()
     }
 
     override fun getLayout(): Int {
@@ -26,8 +30,5 @@ class SplashActivity: BaseActivity<SplashPresent,SplashView>(),SplashView {
         present?.jumpToMainPage()
     }
 
-    override fun obtainContent(): Context {
-        return super.obtainContent()
-    }
 
 }

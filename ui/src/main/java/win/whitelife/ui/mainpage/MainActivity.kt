@@ -9,14 +9,18 @@ import android.util.LayoutDirection
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.TextView
 import win.whitelife.ui.R
 import win.whitelife.voicesecret.base.main.BaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import win.whitelife.base.bean.Voice
 import win.whitelife.base.utils.TimeUtil
+import win.whitelife.ui.play.PlayFragment
 
-class MainActivity : BaseActivity<MainPresent, MainContract.IMainView>(),MainContract.IMainView{
+class MainActivity : BaseActivity<MainPresent, MainContract.IMainView>(),MainContract.IMainView
+        ,View.OnClickListener{
+
 
     private var voices: List<Voice>?=null
 
@@ -53,11 +57,12 @@ class MainActivity : BaseActivity<MainPresent, MainContract.IMainView>(),MainCon
     }
 
 
-    class VoiceHolder(view: View): RecyclerView.ViewHolder(view) {
-
+    inner class VoiceHolder(view: View): RecyclerView.ViewHolder(view) {
         var titleView: TextView = view.findViewById(R.id.tv_voice_title)
         var timeView: TextView = view.findViewById(R.id.tv_voice_time)
-
+        init {
+            view.setOnClickListener(this@MainActivity)
+        }
     }
 
     private val mAdapter: RecyclerView.Adapter<VoiceHolder> = object : RecyclerView.Adapter<VoiceHolder>() {
@@ -81,5 +86,16 @@ class MainActivity : BaseActivity<MainPresent, MainContract.IMainView>(),MainCon
         }
 
     }
+
+
+    override fun onClick(v: View?) {
+        when(v?.id){
+            R.id.cl_voice->{
+                PlayFragment.show(supportFragmentManager)
+            }
+        }
+    }
+
+
 
 }

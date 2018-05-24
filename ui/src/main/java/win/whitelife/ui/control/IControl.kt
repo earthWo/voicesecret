@@ -28,4 +28,6 @@ interface IControl {
 
     fun unRegisterControlView(controlView: IControlView)
 
+    fun release(mode: ControlMode,controlView: IControlView)
+
 }

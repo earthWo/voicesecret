@@ -53,7 +53,8 @@
         android:src="@drawable/drawable_toggle_play"
         android:layout_marginRight="30dp"
         app:layout_constraintBottom_toBottomOf="@id/iv_record"
-        app:layout_constraintTop_toTopOf="@id/iv_record"/>
+        app:layout_constraintTop_toTopOf="@id/iv_record"
+        android:onClick="play"/>
 
 </android.support.constraint.ConstraintLayout>
 

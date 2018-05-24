@@ -1,5 +1,7 @@
 package win.whitelife.record
 
+import android.media.MediaPlayer
+
 /**
  * @author wuzefeng
  * 2018/5/11
@@ -12,9 +14,9 @@ interface IPlay{
 
     fun pause()
 
-    fun stop()
+    fun stop():String
 
-    fun realse()
+    fun setCompletionListener(listener: MediaPlayer.OnCompletionListener)
 
 
 
