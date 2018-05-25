@@ -11,13 +11,14 @@ class RecordPresent: RecordContract.IRecordPresent() {
 
 
 
-    override fun saveVoice(filePath: String) {
+    override fun saveVoice(filePath: String,time: Long) {
 
         val voice=VoiceUtil.createVoice()
         voice.filePath=filePath
         voice.createTime=System.currentTimeMillis()
         voice.name=filePath.substring(filePath.lastIndexOf("/")+1)
         voice.title="默认录音"+voice.name.subSequence(0,voice.name.indexOf("."))
+        voice.duration=time
         DbHelper.getInstance().realm.copyToRealm(voice)
 
     }

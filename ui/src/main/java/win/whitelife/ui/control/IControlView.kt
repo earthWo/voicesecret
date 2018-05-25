@@ -9,7 +9,7 @@ import android.os.Bundle
  */
 interface IControlView{
 
-    fun getContext(): Context
+    fun getViewContext(): Context
 
 
     fun controlCallback(command: Int,bundle: Bundle?)

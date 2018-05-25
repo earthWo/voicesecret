@@ -3,6 +3,7 @@ package win.whitelife.record
 import android.annotation.TargetApi
 import android.media.MediaRecorder
 import android.os.Build
+import android.os.Bundle
 import win.whitelife.base.utils.FileUtil
 
 /**
@@ -10,12 +11,15 @@ import win.whitelife.base.utils.FileUtil
  * @author wuzefeng
  * 2018/5/10
  */
-class VoiceRecord: IRecord{
+class VoiceRecord private constructor(): IRecord{
 
     private var mMediaRecorder: MediaRecorder?=null
 
 
     private var filePath: String?=null
+
+
+    private var recordStartTime: Long=0
 
     companion object {
 
@@ -38,7 +42,6 @@ class VoiceRecord: IRecord{
         }
     }
 
-    private constructor()
 
 
     /**
@@ -58,6 +61,7 @@ class VoiceRecord: IRecord{
 
         mMediaRecorder!!.prepare()
         mMediaRecorder!!.start()
+        recordStartTime=System.currentTimeMillis()
     }
 
 
@@ -73,10 +77,13 @@ class VoiceRecord: IRecord{
         mMediaRecorder!!.pause()
     }
 
-    override fun stopRecord(): String {
+    override fun stopRecord(): Bundle {
         mMediaRecorder!!.stop()
         release()
-        return filePath!!
+        val bundle=Bundle()
+        bundle.putString(VoiceCommand.COMMAND_FILE,filePath)
+        bundle.putLong(VoiceCommand.COMMAND_TIME,System.currentTimeMillis()-recordStartTime)
+        return bundle
     }
 
     private fun release() {

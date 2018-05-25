@@ -12,6 +12,10 @@ class VoiceCommand {
 
         const val COMMAND_FILE="COMMAND_FILE"
 
+        const val COMMAND_TIME="COMMAND_TIME"
+
+        const val COMMAND_SEEK_PROGRESS="COMMAND_SEEK_PROGRESS"
+
         const val COMMAND_START_RECORD=1001
 
         const val COMMAND_STOP_RECORD=1002
@@ -28,6 +32,8 @@ class VoiceCommand {
 
         const val COMMAND_INTENT_FILEPATH="intent_file_path"
 
+        const val COMMAND_SEEK=2005
 
+        const val COMMAND_PLAY_SEEK=2006
     }
 }

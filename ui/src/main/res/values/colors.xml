@@ -3,4 +3,5 @@
     <color name="ui_background_dark">#458bb5</color>
     <color name="ui_background_light">#3eafbe</color>
     <color name="transparent">#00000000</color>
+    <color name="ui_text_color">#111222</color>
 </resources>

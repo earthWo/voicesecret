@@ -8,7 +8,6 @@ import android.media.MediaPlayer
  */
 class VoicePlay: IPlay {
 
-
     private  var mediaPlayer:MediaPlayer?=null
 
 
@@ -35,14 +34,17 @@ class VoicePlay: IPlay {
     }
 
     override fun play(fileName: String) {
-        if(mediaPlayer==null||!mediaPlayer!!.isPlaying){
+        if(mediaPlayer==null){
             initPlayer()
             mCurrentFilePath=fileName
             mediaPlayer!!.setDataSource(fileName)
             mediaPlayer!!.prepare()
             mediaPlayer!!.setOnPreparedListener {
                 mediaPlayer!!.start()
+                VoicePlaySeekHelper.getInstance().listen(mediaPlayer!!,
+                        seekListener)
             }
+            mediaPlayer!!.setOnCompletionListener(completionListener)
         }else{
             mediaPlayer!!.start()
         }
@@ -66,15 +68,48 @@ class VoicePlay: IPlay {
         return mCurrentFilePath!!
     }
 
+    override fun seek(progress: Int) {
+        if(mediaPlayer!=null){
+            mediaPlayer!!.seekTo(progress)
+        }
+    }
+
+    override fun playWithSeek(fileName: String, progress: Int) {
+        if(mediaPlayer==null||!mediaPlayer!!.isPlaying){
+            initPlayer()
+            mCurrentFilePath=fileName
+            mediaPlayer!!.setDataSource(fileName)
+            mediaPlayer!!.prepare()
+            mediaPlayer!!.setOnPreparedListener {
+                mediaPlayer!!.start()
+                mediaPlayer!!.seekTo(progress)
+                VoicePlaySeekHelper.getInstance().listen(mediaPlayer!!,
+                        seekListener)
+            }
+            mediaPlayer!!.setOnCompletionListener(completionListener)
+        }else{
+            mediaPlayer!!.start()
+        }
+    }
+
+
     private fun release() {
+        VoicePlaySeekHelper.getInstance().updateSeek(null,null)
         mediaPlayer!!.release()
         mediaPlayer=null
     }
 
     override fun setCompletionListener(listener: MediaPlayer.OnCompletionListener) {
-        mediaPlayer!!.setOnCompletionListener(listener)
+        completionListener=listener
+    }
+
+    override fun setSeekListener(listener: VoicePlaySeekHelper.SeekListener?) {
+        seekListener=listener
     }
 
 
 
+
+    private var seekListener: VoicePlaySeekHelper.SeekListener?=null
+    private var completionListener: MediaPlayer.OnCompletionListener?=null
 }

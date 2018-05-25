@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:paddingLeft="30dp"
     android:paddingRight="30dp"
     >
@@ -33,6 +34,55 @@
             android:layout_marginTop="22.5dp"
             android:src="@drawable/ui_dialog_play"/>
 
+
+        <TextView
+            android:id="@+id/tv_voice_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="31dp"
+            android:layout_marginRight="50dp"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:focusable="true"
+            android:textSize="14dp"
+            android:focusableInTouchMode="true"
+            android:textColor="@color/ui_text_color"
+            tools:text="录音.aac"/>
+
+
+        <android.support.v7.widget.AppCompatSeekBar
+            android:id="@+id/sb_voice"
+            android:layout_width="match_parent"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="30dp"
+            android:layout_height="30dp"/>
+
+        <TextView
+            android:id="@+id/tv_play_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:textColor="@color/ui_text_color"
+            android:text="0:00"/>
+
+
+        <TextView
+            android:id="@+id/tv_voice_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12dp"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="20dp"
+            android:textColor="@color/ui_text_color"
+            tools:text="4:00"/>
 
     </android.support.v7.widget.CardView>
 

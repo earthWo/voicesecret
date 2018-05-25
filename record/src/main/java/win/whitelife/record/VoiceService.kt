@@ -17,12 +17,18 @@ class VoiceService : Service() ,MediaPlayer.OnCompletionListener{
         return VoiceBinder()
     }
 
-    private lateinit var mControlCallback: IControlCallback
+    private var mControlCallback: IControlCallback?=null
+
+    private var mSeekListener: VoicePlaySeekHelper.SeekListener?=null
 
     inner class VoiceBinder : Binder(){
 
         fun setControlCallback(controlCallback: IControlCallback){
             this@VoiceService.mControlCallback=controlCallback
+        }
+
+        fun setSeekListener(mSeekListener: VoicePlaySeekHelper.SeekListener?){
+            this@VoiceService.mSeekListener=mSeekListener
         }
     }
 
@@ -34,7 +40,7 @@ class VoiceService : Service() ,MediaPlayer.OnCompletionListener{
 
     private fun controlCallback(command: Int, bundle: Bundle?){
         if(mControlCallback!=null){
-            mControlCallback.controlCallback(command,bundle)
+            mControlCallback!!.controlCallback(command,bundle)
         }
     }
 
@@ -51,22 +57,31 @@ class VoiceService : Service() ,MediaPlayer.OnCompletionListener{
                 controlCallback(VoiceCommand.COMMAND_START_RECORD,bundle)
             }
             VoiceCommand.COMMAND_STOP_RECORD->{
-                val filePath= VoiceRecord.getInstance().stopRecord()
-                val bundle=Bundle()
-                bundle.putString(VoiceCommand.COMMAND_FILE,filePath)
+                val bundle= VoiceRecord.getInstance().stopRecord()
                 controlCallback(VoiceCommand.COMMAND_STOP_RECORD,bundle)
             }
             VoiceCommand.COMMAND_START_PLAY->{
                 val fileName=intent!!.getStringExtra(VoiceCommand.COMMAND_FILE)
+                VoicePlay.getInstance().setSeekListener(mSeekListener)
+                VoicePlay.getInstance().setCompletionListener(this)
                 VoicePlay.getInstance().play(fileName)
                 controlCallback(VoiceCommand.COMMAND_START_PLAY,null)
-                VoicePlay.getInstance().setCompletionListener(this)
             }
             VoiceCommand.COMMAND_PAUSE_PLAY->{
                 VoicePlay.getInstance().pause()
+                controlCallback(VoiceCommand.COMMAND_PAUSE_PLAY,null)
             }
             VoiceCommand.COMMAND_STOP_PLAY->{
                 VoicePlay.getInstance().stop()
+            }
+            VoiceCommand.COMMAND_SEEK->{
+                val progress=intent!!.getIntExtra(VoiceCommand.COMMAND_SEEK_PROGRESS,0)
+                VoicePlay.getInstance().seek(progress)
+            }
+            VoiceCommand.COMMAND_PLAY_SEEK->{
+                val progress=intent!!.getIntExtra(VoiceCommand.COMMAND_SEEK_PROGRESS,0)
+                val filePath=intent.getStringExtra(VoiceCommand.COMMAND_INTENT_FILEPATH)
+                VoicePlay.getInstance().playWithSeek(filePath,progress)
             }
         }
     }

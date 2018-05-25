@@ -60,6 +60,7 @@ class MainActivity : BaseActivity<MainPresent, MainContract.IMainView>(),MainCon
     inner class VoiceHolder(view: View): RecyclerView.ViewHolder(view) {
         var titleView: TextView = view.findViewById(R.id.tv_voice_title)
         var timeView: TextView = view.findViewById(R.id.tv_voice_time)
+        var rootView=view
         init {
             view.setOnClickListener(this@MainActivity)
         }
@@ -83,6 +84,7 @@ class MainActivity : BaseActivity<MainPresent, MainContract.IMainView>(),MainCon
         override fun onBindViewHolder(holder: VoiceHolder, position: Int) {
             holder.titleView.text=voices!![position].title
             holder.timeView.text=TimeUtil.defaultDecodeTime(voices!![position].createTime)
+            holder.rootView.tag=voices!![position]
         }
 
     }
@@ -91,7 +93,7 @@ class MainActivity : BaseActivity<MainPresent, MainContract.IMainView>(),MainCon
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.cl_voice->{
-                PlayFragment.show(supportFragmentManager)
+                PlayFragment.show(supportFragmentManager,v.tag as Voice)
             }
         }
     }

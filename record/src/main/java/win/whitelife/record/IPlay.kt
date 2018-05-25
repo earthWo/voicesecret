@@ -16,9 +16,13 @@ interface IPlay{
 
     fun stop():String
 
+    fun seek(progress: Int)
+
+    fun playWithSeek(fileName: String,progress: Int)
+
     fun setCompletionListener(listener: MediaPlayer.OnCompletionListener)
 
-
+    fun setSeekListener(listener: VoicePlaySeekHelper.SeekListener?)
 
 
 }

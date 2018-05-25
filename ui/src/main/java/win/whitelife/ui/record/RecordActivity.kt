@@ -24,7 +24,7 @@ class RecordActivity: BaseActivity<RecordPresent, RecordContract.IRecordView>()
     private var currentFilePath: String?=null
 
 
-    override fun getContext(): Context {
+    override fun getViewContext(): Context {
         return this
     }
 
@@ -33,7 +33,7 @@ class RecordActivity: BaseActivity<RecordPresent, RecordContract.IRecordView>()
             //结束录音
             VoiceCommand.COMMAND_STOP_RECORD->{
                 val filePath=bundle!!.getString(VoiceCommand.COMMAND_FILE)
-                present!!.saveVoice(filePath)
+                present!!.saveVoice(filePath,bundle!!.getLong(VoiceCommand.COMMAND_TIME))
                 iv_record.setImageResource(R.drawable.ui_record)
                 iv_stop.isEnabled=false
                 iv_play.isEnabled=true
@@ -87,13 +87,8 @@ class RecordActivity: BaseActivity<RecordPresent, RecordContract.IRecordView>()
         return RecordPresent()
     }
 
-
-
-
-
     override fun fetchData() {
     }
-
 
     fun back(view: View){
         finish()
@@ -102,6 +97,7 @@ class RecordActivity: BaseActivity<RecordPresent, RecordContract.IRecordView>()
     fun record(view: View){
         ControlHelper.getInstance().record(this)
     }
+
     fun stop(view: View){
         if(mMode==ControlMode.RECORD){
             ControlHelper.getInstance().stopRecord(this)

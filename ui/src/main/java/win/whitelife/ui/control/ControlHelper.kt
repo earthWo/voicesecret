@@ -10,6 +10,7 @@ import win.whitelife.base.utils.FileUtil
 import win.whitelife.base.utils.VoiceUtil
 import win.whitelife.record.IControlCallback
 import win.whitelife.record.VoiceCommand
+import win.whitelife.record.VoicePlaySeekHelper
 import win.whitelife.record.VoiceService
 
 /**
@@ -22,28 +23,45 @@ class ControlHelper : IControl {
     private  var controlView: IControlView?=null
 
 
+
     override fun registerControlView(controlView: IControlView) {
         this.controlView=controlView
-        val intent= Intent(controlView.getContext(),VoiceService::class.java)
+        val intent= Intent(controlView.getViewContext(),VoiceService::class.java)
         mServiceConnection=object : ServiceConnection {
             override fun onServiceDisconnected(name: ComponentName?) {
             }
             override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-                (service as VoiceService.VoiceBinder).setControlCallback(object : IControlCallback {
+                val binder=service as VoiceService.VoiceBinder
+                binder.setControlCallback(object : IControlCallback {
                     override fun controlCallback(command: Int, bundle: Bundle?) {
                         controlView.controlCallback(command,bundle)
                     }
                 })
+                binder.setSeekListener(object : VoicePlaySeekHelper.SeekListener{
+                    override fun getSeek(currentPosition: Int) {
+                        if(seekListener!=null){
+                            seekListener!!.getSeek(currentPosition)
+                        }
+                    }
+                })
             }
         }
-        controlView.getContext().bindService(intent,mServiceConnection ,Context.BIND_AUTO_CREATE)
+        controlView.getViewContext().bindService(intent,mServiceConnection ,Context.BIND_AUTO_CREATE)
     }
 
 
-    private lateinit var mServiceConnection: ServiceConnection
+    private var mServiceConnection: ServiceConnection?=null
 
     override fun unRegisterControlView(controlView: IControlView) {
-        controlView.getContext().unbindService(mServiceConnection)
+        if(mServiceConnection!=null){
+            controlView.getViewContext().unbindService(mServiceConnection)
+        }
+    }
+
+    private var seekListener: VoicePlaySeekHelper.SeekListener?=null
+
+    override fun setSeekListener(listener: VoicePlaySeekHelper.SeekListener?) {
+        seekListener=listener
     }
 
     override fun stopPlay(context: Context) {
@@ -98,7 +116,7 @@ class ControlHelper : IControl {
 
         private  var sInstance: ControlHelper?=null
 
-        fun getInstance(): ControlHelper{
+        fun getInstance(): IControl{
             if(sInstance==null){
                 synchronized(ControlHelper.javaClass){}
                 if(sInstance==null){
@@ -114,13 +132,30 @@ class ControlHelper : IControl {
         when(mode){
             ControlMode.PLAY,
             ControlMode.PLAY_PAUSE->{
-               stopPlay(controlView.getContext())
+                stopPlay(controlView.getViewContext())
             }
             ControlMode.RECORD,
             ControlMode.RECORD_PAUSE->{
-                stopRecord(controlView.getContext())
+                stopRecord(controlView.getViewContext())
             }
         }
+    }
+
+    override fun seek(context: Context,progress: Int) {
+        val intent= Intent(context,VoiceService::class.java)
+        intent.putExtra(VoiceCommand.COMMAND,VoiceCommand.COMMAND_SEEK)
+        intent.putExtra(VoiceCommand.COMMAND_SEEK_PROGRESS,progress)
+        context.startService(intent)
+    }
+
+
+    override fun playWithSeek(context: Context, filePath: String, progress: Int) {
+        val intent= Intent(context,VoiceService::class.java)
+        intent.putExtra(VoiceCommand.COMMAND,VoiceCommand.COMMAND_PLAY_SEEK)
+        intent.putExtra(VoiceCommand.COMMAND_SEEK_PROGRESS,progress)
+        intent.putExtra(VoiceCommand.COMMAND_FILE,filePath)
+        context.startService(intent)
+
     }
 
 

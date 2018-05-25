@@ -1,6 +1,7 @@
 package win.whitelife.ui.control
 
 import android.content.Context
+import win.whitelife.record.VoicePlaySeekHelper
 
 /**
  * @author wuzefeng
@@ -22,6 +23,10 @@ interface IControl {
 
     fun releaseRecord(context: Context)
 
+    fun seek(context: Context,progress: Int)
+
+    fun playWithSeek(context: Context,filePath: String,progress: Int)
+
     fun pauseRecord(context: Context)
 
     fun registerControlView(controlView: IControlView)
@@ -29,5 +34,7 @@ interface IControl {
     fun unRegisterControlView(controlView: IControlView)
 
     fun release(mode: ControlMode,controlView: IControlView)
+
+    fun setSeekListener(listener: VoicePlaySeekHelper.SeekListener?)
 
 }

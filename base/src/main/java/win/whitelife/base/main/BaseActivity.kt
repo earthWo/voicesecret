@@ -63,14 +63,15 @@ abstract class BaseActivity<P: BasePresent<V>,V: BaseView>: AppCompatActivity(),
      * 创建结束赋值
      */
     override fun onLoadFinished(loader: Loader<P>, data: P) {
-        present=data
-        present!!.attachView(this as V)
-        fetchData()
+        if(present==null){
+            present=data
+            present!!.attachView(this as V)
+            fetchData()
+        }
     }
 
     override fun onStop() {
         super.onStop()
-        supportLoaderManager.destroyLoader(LOAD_ID)
     }
 
     /**

@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">@color/ui_background_light</color>
     <color name="colorPrimaryDark">@color/ui_background_dark</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#3eafbe</color>
     <color name="ui_background_dark">#458bb5</color>
     <color name="ui_background_light">#3eafbe</color>
 </resources>

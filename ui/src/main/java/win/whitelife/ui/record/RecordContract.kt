@@ -11,7 +11,7 @@ class RecordContract {
 
     abstract class IRecordPresent :BasePresent<IRecordView>(){
 
-        abstract fun saveVoice(filePath: String)
+        abstract fun saveVoice(filePath: String,time: Long)
 
     }
 
