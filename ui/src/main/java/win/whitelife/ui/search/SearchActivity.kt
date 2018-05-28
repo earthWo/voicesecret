@@ -1,37 +1,33 @@
-package win.whitelife.ui.mainpage
+package win.whitelife.ui.search
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.support.v7.widget.AppCompatEditText
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import win.whitelife.ui.R
-import win.whitelife.voicesecret.base.main.BaseActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_search.*
 import win.whitelife.base.bean.Voice
 import win.whitelife.base.utils.TimeUtil
+import win.whitelife.ui.R
 import win.whitelife.ui.play.PlayFragment
+import win.whitelife.voicesecret.base.main.BaseActivity
 
-class MainActivity : BaseActivity<MainPresent, MainContract.IMainView>(),MainContract.IMainView
-        ,View.OnClickListener{
+/**
+ * @author wuzefeng
+ * 2018/5/28
+ */
+class SearchActivity : BaseActivity<SearchPresent,SearchContract.ISearchView>(),SearchContract.ISearchView,View.OnClickListener{
 
     private var voices: List<Voice>?=null
 
-    override fun bindData(voices: List<Voice>) {
-        this.voices=voices
-        mAdapter.notifyDataSetChanged()
-    }
-
-    override fun createPresent(): MainPresent {
-        return MainPresent()
-    }
-
     override fun initView() {
-        rv_voice.layoutManager=LinearLayoutManager(this)
+        rv_voice.layoutManager= LinearLayoutManager(this)
         val dividerItemDecoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         dividerItemDecoration.setDrawable(ColorDrawable(Color.WHITE))
         rv_voice.addItemDecoration(dividerItemDecoration)
@@ -39,19 +35,29 @@ class MainActivity : BaseActivity<MainPresent, MainContract.IMainView>(),MainCon
     }
 
     override fun getLayout(): Int {
-        return R.layout.activity_main
+        return R.layout.activity_search
+    }
+
+    override fun createPresent(): SearchPresent {
+        return SearchPresent()
     }
 
     override fun fetchData() {
-        present!!.fetchData()
+        et_voice.setOnKeyListener { _, keyCode, event ->
+            if(event!!.action==KeyEvent.ACTION_UP&&keyCode==KeyEvent.KEYCODE_ENTER){
+                present!!.search(findViewById<AppCompatEditText>(R.id.et_voice).text.toString())
+            }
+            false
+        }
     }
 
-    fun jumpToRecord(view: View){
-        present!!.jumpToRecord()
+    fun back(view: View){
+        finish()
     }
 
-    fun jumpToSearch(view: View){
-        present!!.jumpToSearch()
+    override fun bindDate(list: List<Voice>) {
+        voices=list
+        mAdapter.notifyDataSetChanged()
     }
 
     inner class VoiceHolder(view: View): RecyclerView.ViewHolder(view) {
@@ -59,14 +65,14 @@ class MainActivity : BaseActivity<MainPresent, MainContract.IMainView>(),MainCon
         var timeView: TextView = view.findViewById(R.id.tv_voice_time)
         var rootView=view
         init {
-            view.setOnClickListener(this@MainActivity)
+            view.setOnClickListener(this@SearchActivity)
         }
     }
 
-    private val mAdapter: RecyclerView.Adapter<VoiceHolder> = object : RecyclerView.Adapter<VoiceHolder>() {
+    private val mAdapter: RecyclerView.Adapter<SearchActivity.VoiceHolder> = object : RecyclerView.Adapter<SearchActivity.VoiceHolder>() {
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VoiceHolder {
-            return VoiceHolder(LayoutInflater.from(this@MainActivity).inflate(R.layout.item_voice,parent,false))
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchActivity.VoiceHolder {
+            return VoiceHolder(LayoutInflater.from(this@SearchActivity).inflate(R.layout.item_voice,parent,false))
         }
 
         override fun getItemCount(): Int {
@@ -77,9 +83,9 @@ class MainActivity : BaseActivity<MainPresent, MainContract.IMainView>(),MainCon
             }
         }
 
-        override fun onBindViewHolder(holder: VoiceHolder, position: Int) {
+        override fun onBindViewHolder(holder: SearchActivity.VoiceHolder, position: Int) {
             holder.titleView.text=voices!![position].title
-            holder.timeView.text=TimeUtil.defaultDecodeTime(voices!![position].createTime)
+            holder.timeView.text= TimeUtil.defaultDecodeTime(voices!![position].createTime)
             holder.rootView.tag=voices!![position]
         }
 
@@ -92,5 +98,11 @@ class MainActivity : BaseActivity<MainPresent, MainContract.IMainView>(),MainCon
             }
         }
     }
+
+
+
+
+
+
 
 }

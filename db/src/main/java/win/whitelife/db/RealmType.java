@@ -8,7 +8,8 @@ public enum RealmType {
 
     ADD,
     DELETE,
-    SEARCH,
+    SEARCH_EQUAL,
+    SEARCH_CONTAIN,
     MODIFY,
     UPDATE
 }

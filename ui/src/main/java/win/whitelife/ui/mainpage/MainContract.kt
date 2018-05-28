@@ -11,11 +11,18 @@ import win.whitelife.voicesecret.base.main.BaseView
 class MainContract{
 
     interface IMainView: BaseView{
-       fun bindData(voices: List<Voice>)
+        fun bindData(voices: List<Voice>)
     }
 
     abstract class IMainPresent:BasePresent<IMainView>(){
-       abstract fun fetchData()
+
+        abstract fun fetchData()
+
+        abstract fun jumpToRecord()
+
+        abstract fun jumpToSearch()
+
     }
+
 
 }

@@ -29,6 +29,7 @@
         android:src="@drawable/ui_search"
         app:layout_constraintRight_toLeftOf="@id/iv_option"
         app:layout_constraintRight_toRightOf="parent"
+        android:onClick="jumpToSearch"
         />
 
     <ImageView

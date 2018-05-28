@@ -47,8 +47,10 @@ public class RealmHelper {
             return parseAddMethod(args);
         }else if(type==RealmType.DELETE){
             return parseDeleteMethod(args);
-        }else if(type==RealmType.SEARCH){
+        }else if(type==RealmType.SEARCH_EQUAL){
             return parseSearchMethod(args);
+        }else if(type==RealmType.SEARCH_CONTAIN){
+            return parseSearchContainMethod(args);
         }else if(type==RealmType.UPDATE){
             return parseUpdateMethod(args);
         }else if(type==RealmType.MODIFY){
@@ -129,6 +131,26 @@ public class RealmHelper {
                     }else if(values[i] instanceof Date){
                         realmQuery=realmQuery.equalTo(items[i], (Date) values[i]);
                     }
+                }
+                returnObject=realmQuery.findAll();
+            }
+        }
+        return returnObject;
+    }
+
+    private static Object parseSearchContainMethod(Object[]args){
+        Object returnObject = null;
+        if(args!=null&&args.length>0){
+            Object o=args[0];
+            if(o instanceof Class &&args.length==1){
+                returnObject=realm.where((Class<RealmModel>) o).findAll();
+            }else if(o instanceof Class){
+                String[]items= (String[]) args[1];
+                Object[]values= (Object[]) args[2];
+                RealmQuery realmQuery=  realm.where((Class<RealmModel>)o);
+
+                for(int i=0;i<items.length;i++){
+                    realmQuery=realmQuery.contains(items[i], (String) values[i]);
                 }
                 returnObject=realmQuery.findAll();
             }

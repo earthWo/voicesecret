@@ -17,5 +17,4 @@ class RecordContract {
 
     interface IRecordView : BaseView
 
-
 }

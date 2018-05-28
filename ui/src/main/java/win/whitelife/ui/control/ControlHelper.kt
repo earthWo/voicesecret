@@ -7,7 +7,6 @@ import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
 import win.whitelife.base.utils.FileUtil
-import win.whitelife.base.utils.VoiceUtil
 import win.whitelife.record.IControlCallback
 import win.whitelife.record.VoiceCommand
 import win.whitelife.record.VoicePlaySeekHelper
@@ -22,7 +21,7 @@ class ControlHelper : IControl {
 
     private  var controlView: IControlView?=null
 
-
+    private var connectListener: ConnectListener?=null
 
     override fun registerControlView(controlView: IControlView) {
         this.controlView=controlView
@@ -44,11 +43,13 @@ class ControlHelper : IControl {
                         }
                     }
                 })
+                if(connectListener!=null){
+                    connectListener!!.connect()
+                }
             }
         }
         controlView.getViewContext().bindService(intent,mServiceConnection ,Context.BIND_AUTO_CREATE)
     }
-
 
     private var mServiceConnection: ServiceConnection?=null
 
@@ -96,7 +97,6 @@ class ControlHelper : IControl {
 
     override fun pauseRecord(context: Context) {
     }
-
 
     override fun play(context: Context, filePath: String) {
         val intent= Intent(context,VoiceService::class.java)
@@ -148,7 +148,6 @@ class ControlHelper : IControl {
         context.startService(intent)
     }
 
-
     override fun playWithSeek(context: Context, filePath: String, progress: Int) {
         val intent= Intent(context,VoiceService::class.java)
         intent.putExtra(VoiceCommand.COMMAND,VoiceCommand.COMMAND_PLAY_SEEK)
@@ -158,6 +157,9 @@ class ControlHelper : IControl {
 
     }
 
+    override fun registerConnectListener(connectListener: ConnectListener) {
+        this.connectListener=connectListener
+    }
 
 
 }

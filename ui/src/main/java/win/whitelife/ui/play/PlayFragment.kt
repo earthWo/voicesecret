@@ -11,21 +11,22 @@ import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
 import win.whitelife.base.bean.Voice
-import win.whitelife.base.utils.DimenUtil
 import win.whitelife.base.utils.TimeUtil
 import win.whitelife.record.VoiceCommand
 import win.whitelife.record.VoicePlaySeekHelper
 import win.whitelife.ui.R
+import win.whitelife.ui.control.ConnectListener
 import win.whitelife.ui.control.ControlHelper
 import win.whitelife.ui.control.ControlMode
 import win.whitelife.ui.control.IControlView
-
 
 /**
  * @author wuzefeng
  * 2018/5/24
  */
-class PlayFragment : DialogFragment(), IControlView,VoicePlaySeekHelper.SeekListener, SeekBar.OnSeekBarChangeListener{
+class PlayFragment : DialogFragment(), IControlView,VoicePlaySeekHelper.SeekListener, SeekBar.OnSeekBarChangeListener
+        ,ConnectListener{
+
 
     private var mode: ControlMode=ControlMode.INIT
 
@@ -55,16 +56,17 @@ class PlayFragment : DialogFragment(), IControlView,VoicePlaySeekHelper.SeekList
         mPlayView!!.setOnClickListener { play() }
         view.findViewById<TextView>(R.id.tv_voice_name).text=voice!!.name
         ControlHelper.getInstance().setSeekListener(this)
+        ControlHelper.getInstance().registerConnectListener(this)
         ControlHelper.getInstance().registerControlView(this)
         view.findViewById<TextView>(R.id.tv_voice_time).text=TimeUtil.decodeVoiceTime(voice!!.duration)
         mSeekBar!!.setOnSeekBarChangeListener(this)
         mSeekBar!!.max= voice!!.duration.toInt()
     }
 
-
-
-
     private fun play(){
+        if(context==null){
+            return
+        }
         when(mode){
             ControlMode.INIT->{
                 if(seekUpdate){
@@ -88,14 +90,13 @@ class PlayFragment : DialogFragment(), IControlView,VoicePlaySeekHelper.SeekList
     override fun onStart() {
         val params = dialog.window.attributes
         params.width= ViewGroup.LayoutParams.MATCH_PARENT
-        params.height= DimenUtil.dp2px(context!!,120f)
+        params.height= 360
         params.windowAnimations = 0
         dialog.window!!.setBackgroundDrawableResource(R.color.transparent)
         params.dimAmount = 0.3f //dimAmount在0.0f和1.0f之间，0.0f完全不暗，1.0f全暗
         dialog.window.attributes = params
         super.onStart()
     }
-
 
     override fun getViewContext(): Context {
         return context!!
@@ -131,7 +132,6 @@ class PlayFragment : DialogFragment(), IControlView,VoicePlaySeekHelper.SeekList
         ControlHelper.getInstance().setSeekListener(null)
     }
 
-
     private var seekUpdate=false
 
     override fun onStopTrackingTouch(seekBar: SeekBar?) {
@@ -139,13 +139,18 @@ class PlayFragment : DialogFragment(), IControlView,VoicePlaySeekHelper.SeekList
         when(mode){
             ControlMode.PLAY->{
                 ControlHelper.getInstance().seek(context!!,seekBar!!.progress)
+                seekUpdate=false
             }
         }
-
     }
 
     override fun getSeek(currentPosition: Int) {
-        mSeekBar!!.progress = currentPosition
+        if(!seekUpdate)
+            mSeekBar!!.progress = currentPosition
+    }
+
+    override fun connect() {
+        play()
     }
 
 }

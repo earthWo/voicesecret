@@ -9,8 +9,6 @@ import win.whitelife.ui.db.DbHelper
  */
 class RecordPresent: RecordContract.IRecordPresent() {
 
-
-
     override fun saveVoice(filePath: String,time: Long) {
 
         val voice=VoiceUtil.createVoice()
@@ -22,6 +20,5 @@ class RecordPresent: RecordContract.IRecordPresent() {
         DbHelper.getInstance().realm.copyToRealm(voice)
 
     }
-
 
 }

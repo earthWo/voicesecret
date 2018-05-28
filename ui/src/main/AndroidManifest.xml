@@ -4,6 +4,7 @@
     <application>
         <activity android:name="win.whitelife.ui.mainpage.MainActivity"/>
         <activity android:name="win.whitelife.ui.record.RecordActivity"/>
+        <activity android:name="win.whitelife.ui.search.SearchActivity"/>
         <service android:name="win.whitelife.record.VoiceService"></service>
     </application>
 

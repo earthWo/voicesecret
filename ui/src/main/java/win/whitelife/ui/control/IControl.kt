@@ -37,4 +37,6 @@ interface IControl {
 
     fun setSeekListener(listener: VoicePlaySeekHelper.SeekListener?)
 
+    fun registerConnectListener(connectListener: ConnectListener)
+
 }

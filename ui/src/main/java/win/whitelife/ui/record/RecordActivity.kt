@@ -20,9 +20,7 @@ class RecordActivity: BaseActivity<RecordPresent, RecordContract.IRecordView>()
 
     private var mMode: ControlMode=ControlMode.INIT
 
-
     private var currentFilePath: String?=null
-
 
     override fun getViewContext(): Context {
         return this
@@ -66,7 +64,6 @@ class RecordActivity: BaseActivity<RecordPresent, RecordContract.IRecordView>()
             }
         }
     }
-
 
     override fun initView() {
         ControlHelper.getInstance().registerControlView(this)
@@ -113,4 +110,5 @@ class RecordActivity: BaseActivity<RecordPresent, RecordContract.IRecordView>()
            ControlHelper.getInstance().pausePlay(this)
        }
     }
+
 }

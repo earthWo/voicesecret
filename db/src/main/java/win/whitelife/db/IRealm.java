@@ -89,7 +89,7 @@ public interface IRealm {
      * @param <T>
      * @return
      */
-    @RealmTypes(RealmType.SEARCH)
+    @RealmTypes(RealmType.SEARCH_EQUAL)
     <T extends RealmObject>RealmResults<T> findAll(Class<T> cla);
 
 
@@ -101,8 +101,19 @@ public interface IRealm {
      * @param <T>
      * @return
      */
-    @RealmTypes(RealmType.SEARCH)
-     <T extends RealmObject>RealmResults<T> findEquals(Class<T> cla, String[] args, Object[] values);
+    @RealmTypes(RealmType.SEARCH_EQUAL)
+    <T extends RealmObject>RealmResults<T> findEquals(Class<T> cla, String[] args, Object[] values);
+
+    /**
+     * 查找包含的
+     * @param cla
+     * @param args
+     * @param values
+     * @param <T>
+     * @return
+     */
+    @RealmTypes(RealmType.SEARCH_CONTAIN)
+    <T extends RealmObject>RealmResults<T> findContain(Class<T> cla, String[] args, String[] values);
 
 
     /**
