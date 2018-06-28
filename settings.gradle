@@ -1,1 +1,1 @@
-include  ':app', ':base', ':ui', ':db', ':record', ':view'
+include  ':app', ':base', ':ui', ':db', ':record', ':view', ':fingerprint'

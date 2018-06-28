@@ -1,5 +1,7 @@
 package win.whitelife.voicesecret.app
 
+import android.os.Build
+import android.support.annotation.RequiresApi
 import win.whitelife.permission.PermissionManager
 import win.whitelife.voicesecret.R
 import win.whitelife.voicesecret.base.main.BaseActivity
@@ -26,8 +28,9 @@ class SplashActivity: BaseActivity<SplashPresent,SplashView>(),SplashView {
         return SplashPresent()
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun fetchData() {
-        present?.jumpToMainPage()
+        present?.jumpToFingerPage()
     }
 
 

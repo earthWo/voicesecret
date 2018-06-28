@@ -37,7 +37,7 @@ class PlayFragment : DialogFragment(), IControlView,VoicePlaySeekHelper.SeekList
     private var mSeekBar: AppCompatSeekBar?=null
 
     companion object {
-        fun show(manager: FragmentManager?,voice: Voice): PlayFragment{
+        fun show(manager: FragmentManager?, voice: Voice): PlayFragment{
             val playFragment=PlayFragment()
             playFragment.voice=voice
             playFragment.show(manager!!,"play_dialog")

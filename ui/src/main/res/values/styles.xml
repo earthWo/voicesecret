@@ -4,4 +4,10 @@
         <item name="android:background">@android:color/transparent</item> <!-- 设置自定义布局的背景透明 -->
         <item name="android:windowBackground">@android:color/background_dark</item>  <!-- 设置window背景透明，也就是去边框 -->
     </style>
+
+    <style name="style_setting_text">
+        <item name="android:textSize">15dp</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:gravity">center</item>
+    </style>
 </resources>

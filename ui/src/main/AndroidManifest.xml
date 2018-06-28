@@ -2,9 +2,16 @@
           package="win.whitelife.ui">
 
     <application>
-        <activity android:name="win.whitelife.ui.mainpage.MainActivity"/>
+        <activity android:name="win.whitelife.ui.mainpage.MainActivity"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="win.whitelife.voicesercet.main" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name="win.whitelife.ui.record.RecordActivity"/>
         <activity android:name="win.whitelife.ui.search.SearchActivity"/>
+        <activity android:name="win.whitelife.ui.setting.SettingActivity"/>
         <service android:name="win.whitelife.record.VoiceService"></service>
     </application>
 

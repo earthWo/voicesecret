@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item >
+        <shape>
+            <gradient android:startColor="@color/colorPrimary"  android:endColor="@color/colorPrimaryDark" android:angle="90"></gradient>
+        </shape>
+    </item>
+    <item android:right="80dp" android:left="80dp" android:width="130dp" android:height="130dp" android:gravity="center">
+        <bitmap android:src="@drawable/splsh_icon"></bitmap>
+    </item>
+</layer-list>

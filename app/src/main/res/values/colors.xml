@@ -5,4 +5,5 @@
     <color name="colorAccent">#3eafbe</color>
     <color name="ui_background_dark">#458bb5</color>
     <color name="ui_background_light">#3eafbe</color>
+    <color name="transparent">#00000000</color>
 </resources>

@@ -22,6 +22,8 @@ class MainContract{
 
         abstract fun jumpToSearch()
 
+        abstract fun jumpToSetting()
+
     }
 
 

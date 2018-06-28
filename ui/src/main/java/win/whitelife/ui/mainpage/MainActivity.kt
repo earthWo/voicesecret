@@ -54,6 +54,11 @@ class MainActivity : BaseActivity<MainPresent, MainContract.IMainView>(),MainCon
         present!!.jumpToSearch()
     }
 
+
+    fun jumpToSetting(view: View){
+        present!!.jumpToSetting()
+    }
+
     inner class VoiceHolder(view: View): RecyclerView.ViewHolder(view) {
         var titleView: TextView = view.findViewById(R.id.tv_voice_title)
         var timeView: TextView = view.findViewById(R.id.tv_voice_time)

@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/base" />
             <option value="$PROJECT_DIR$/db" />
+            <option value="$PROJECT_DIR$/fingerprint" />
             <option value="$PROJECT_DIR$/record" />
             <option value="$PROJECT_DIR$/ui" />
             <option value="$PROJECT_DIR$/view" />
